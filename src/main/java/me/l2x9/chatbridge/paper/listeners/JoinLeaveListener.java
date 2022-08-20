@@ -21,8 +21,8 @@ public class JoinLeaveListener implements Listener {
     public void onJoin(PlayerJoinEvent event) {
         EmbedBuilder embedBuilder = new EmbedBuilder();
         if (!event.getPlayer().hasPlayedBefore()) {
-            embedBuilder.setTitle(String.format(":tada: %s Joined for the first time", event.getPlayer().getName()));
-        } else embedBuilder.setTitle(String.format("%s joined", event.getPlayer().getName()));
+            embedBuilder.setDescription(String.format(":tada: **%s** Joined for the first time", event.getPlayer().getName()));
+        } else embedBuilder.setDescription(String.format("**%s** joined", event.getPlayer().getName()));
         embedBuilder.setColor(0x6eff3b);
         plugin.getBot().getBridgeChannel().sendMessageEmbeds(embedBuilder.build()).queue();
     }
@@ -32,7 +32,7 @@ public class JoinLeaveListener implements Listener {
         if (Arrays.stream(Thread.currentThread().getStackTrace()).anyMatch(e -> e.toString().contains("PlayerConnection.disconnect")))
             return;
         EmbedBuilder embedBuilder = new EmbedBuilder();
-        embedBuilder.setTitle(String.format("%s left", event.getPlayer().getName()));
+        embedBuilder.setDescription(String.format("**%s** left", event.getPlayer().getName()));
         embedBuilder.setColor(0xaa0000);
         plugin.getBot().getBridgeChannel().sendMessageEmbeds(embedBuilder.build()).queue();
     }
@@ -40,7 +40,7 @@ public class JoinLeaveListener implements Listener {
     @EventHandler(priority = EventPriority.LOWEST) //Allow other plugins to change the message
     public void onKick(PlayerKickEvent event) {
         EmbedBuilder embedBuilder = new EmbedBuilder();
-        embedBuilder.setTitle(String.format("%s was kicked for \"%s\"", event.getPlayer().getName(), ChatColor.stripColor(event.getReason())));
+        embedBuilder.setDescription(String.format("**%s** was kicked for \"%s\"", event.getPlayer().getName(), ChatColor.stripColor(event.getReason())));
         embedBuilder.setColor(0xaa0000);
         plugin.getBot().getBridgeChannel().sendMessageEmbeds(embedBuilder.build()).queue();
     }
