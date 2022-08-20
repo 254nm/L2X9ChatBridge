@@ -1,16 +1,15 @@
 package me.l2x9.chatbridge;
 
 import lombok.Getter;
+import me.l2x9.chatbridge.paper.listeners.AdvancementListener;
 import me.l2x9.chatbridge.paper.listeners.ChatListener;
 import me.l2x9.chatbridge.paper.listeners.DeathListener;
 import me.l2x9.chatbridge.paper.listeners.JoinLeaveListener;
-import net.dv8tion.jda.api.EmbedBuilder;
+import net.minecraft.server.v1_12_R1.CommandAdvancement;
 import org.bukkit.configuration.Configuration;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
-
-import java.awt.*;
 
 @Getter
 public final class L2X9ChatBridge extends JavaPlugin {
@@ -36,6 +35,7 @@ public final class L2X9ChatBridge extends JavaPlugin {
         register(new ChatListener(this));
         register(new DeathListener(this));
         register(new JoinLeaveListener(this));
+        register(new AdvancementListener(this));
     }
     private void register(Listener listener) {
         getServer().getPluginManager().registerEvents(listener, this);
