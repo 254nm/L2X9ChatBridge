@@ -1,0 +1,8 @@
+name: L2X9ChatBridge
+version: '${project.version}'
+main: me.l2x9.chatbridge.L2X9ChatBridge
+authors: [ 254n_m ]
+description: A simple chat bridge plugin
+depend:
+  - L2X9RebootCore
+  - DeathMessagesPrime

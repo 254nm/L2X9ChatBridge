@@ -1,0 +1,7 @@
+Discord:
+  Token: "token"
+  BridgeChannelID: "bridge_channel_id"
+  PlayerMessageFormat: "<%s> %s"
+  StartMessage: ":white_check_mark: Server Started!"
+Minecraft:
+  mt: ""
