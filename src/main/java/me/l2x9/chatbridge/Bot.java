@@ -16,7 +16,7 @@ public class Bot {
         try {
             long start = System.currentTimeMillis();
             JDABuilder builder = JDABuilder.createDefault(token);
-            builder.enableIntents(GatewayIntent.MESSAGE_CONTENT);
+            builder.enableIntents(GatewayIntent.MESSAGE_CONTENT, GatewayIntent.GUILD_MEMBERS, GatewayIntent.GUILD_PRESENCES);
             builder.setActivity(Activity.watching("L2X9 Chat"));
             jda = builder.build();
             jda.awaitReady();

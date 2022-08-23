@@ -1,7 +1,7 @@
 package me.l2x9.chatbridge;
 
 import lombok.Getter;
-import me.l2x9.chatbridge.discord.commands.PlayerListCommand;
+import me.l2x9.chatbridge.discord.command.CommandManager;
 import me.l2x9.chatbridge.discord.listeners.MessageListener;
 import me.l2x9.chatbridge.paper.listeners.AdvancementListener;
 import me.l2x9.chatbridge.paper.listeners.ChatListener;
@@ -33,7 +33,7 @@ public final class L2X9ChatBridge extends JavaPlugin {
         paperConfig = config.getConfigurationSection("Minecraft");
         getLogger().addHandler(new LoggerHandler());
         bot = new Bot(discordConfig.getString("Token"), this);
-        bot.getJda().addEventListener(new MessageListener(this), new PlayerListCommand());
+        bot.getJda().addEventListener(new CommandManager(), new MessageListener(this));
         bot.getJda().upsertCommand("playerlist", "List all the players on the server").queue();
         register(new ChatListener(this));
         register(new DeathListener(this));

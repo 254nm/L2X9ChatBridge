@@ -23,7 +23,7 @@ public class MessageListener extends ListenerAdapter {
     public void onMessageReceived(@NotNull MessageReceivedEvent event) {
         Message message = event.getMessage();
         if (event.getAuthor().isBot()) return;
-        if (message.getContentRaw().startsWith("/")) return;
+        if (message.getContentRaw().startsWith("$")) return;
         if (event.getChannel().equals(plugin.getBot().getBridgeChannel())) {
             StringBuilder msg = new StringBuilder();
             msg.append(ChatColor.stripColor(message.getContentRaw()));
