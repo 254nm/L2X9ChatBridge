@@ -29,8 +29,11 @@ public class JoinLeaveListener implements Listener {
 
     @EventHandler(priority = EventPriority.LOWEST) //Allow other plugins to change the message
     public void onLeave(PlayerQuitEvent event) {
-        if (Arrays.stream(Thread.currentThread().getStackTrace()).anyMatch(e -> e.toString().contains("PlayerConnection.disconnect")))
-            return;
+//        System.out.println(Arrays.stream(Thread.currentThread().getStackTrace()).map(StackTraceElement::toString).collect(Collectors.joining("\n")));
+        if (Arrays.stream(Thread.currentThread().getStackTrace()).anyMatch(e ->  {
+            if (e.toString().contains("PlayerConnection.disconnect")) return true;
+            return e.toString().contains("Utils.kick");
+        })) return;
         EmbedBuilder embedBuilder = new EmbedBuilder();
         embedBuilder.setDescription(String.format("**%s** left", event.getPlayer().getName()));
         embedBuilder.setColor(0xaa0000);
