@@ -6,6 +6,7 @@ import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.entities.Activity;
 import net.dv8tion.jda.api.entities.TextChannel;
+import net.dv8tion.jda.api.requests.GatewayIntent;
 
 @Getter
 public class Bot {
@@ -15,6 +16,7 @@ public class Bot {
         try {
             long start = System.currentTimeMillis();
             JDABuilder builder = JDABuilder.createDefault(token);
+            builder.enableIntents(GatewayIntent.MESSAGE_CONTENT);
             builder.setActivity(Activity.watching("L2X9 Chat"));
             jda = builder.build();
             jda.awaitReady();
