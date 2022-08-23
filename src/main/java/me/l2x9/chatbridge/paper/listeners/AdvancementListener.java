@@ -15,6 +15,8 @@ public class AdvancementListener implements Listener {
     @EventHandler
     public void onAdvancement(PlayerAdvancementDoneEvent event) {
         Advancement advancement = ((CraftAdvancement)event.getAdvancement()).getHandle();
+        if (advancement.c() == null) return;
+        if (advancement.c().a() == null) return;
         EmbedBuilder embedBuilder = new EmbedBuilder();
         embedBuilder.setDescription(String.format(":partying_face: **%s** made the advancement %s", event.getPlayer().getName(), advancement.c().a().toPlainText()));
         embedBuilder.setColor(0x1E244B);
