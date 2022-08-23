@@ -15,7 +15,7 @@ public class DeathListener implements Listener {
     public void onDie(DeathMessageBroadcastEvent event) {
         if (event.getWorld().equals(Bukkit.getWorlds().get(0))) { //DMP is weird
             EmbedBuilder embedBuilder = new EmbedBuilder();
-            embedBuilder.setTitle(String.format(":skull: %s", event.getMessage().toPlainText()));
+            embedBuilder.setDescription(String.format(":skull: **%s**", event.getMessage().toPlainText()));
             embedBuilder.setColor(0xaa0000);
             plugin.getBot().getBridgeChannel().sendMessageEmbeds(embedBuilder.build()).queue();
         }
