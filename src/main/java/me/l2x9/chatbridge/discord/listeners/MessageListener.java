@@ -14,10 +14,13 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.regex.Pattern;
+
 @RequiredArgsConstructor
 public class MessageListener extends ListenerAdapter {
     private final L2X9ChatBridge plugin;
     private final ChatManager chatManager = (ChatManager) L2X9RebootCore.getInstance().getManagers().stream().filter(m -> m instanceof ChatManager).findAny().get();
+    private final Pattern usernameRegex = Pattern.compile("^\\w{3,16}$>");
 
     @Override
     public void onMessageReceived(@NotNull MessageReceivedEvent event) {
@@ -28,16 +31,24 @@ public class MessageListener extends ListenerAdapter {
             StringBuilder msg = new StringBuilder();
             msg.append(ChatColor.stripColor(message.getContentRaw()));
             message.getAttachments().forEach(a -> msg.append(formatAttachment(event.getMessage().getContentRaw(), a)));
-            String messageFormat = Utils.translateChars("&7<&r&b%s&r&7>&r&3 %s&r"), userName = event.getAuthor().getAsTag();
-            String finalMessage = String.format(messageFormat, userName, msg);
+            String userName = event.getAuthor().getAsTag();
+            String toMc = (message.getReferencedMessage() != null) ? String.format(Utils.translateChars("&7<&r&b%s&r&7> (&r&d%s&r&7)&r&3 %s&r"), userName, parseReply(message), msg) : String.format(Utils.translateChars("&7<&r&b%s&r&7>&r&3 %s&r"), userName, msg);
             Bukkit.getOnlinePlayers().forEach(p -> {
                 ChatInfo ci = chatManager.getInfo(p);
-                if (!ci.isToggledChat()) p.sendMessage(finalMessage);
+                if (!ci.isToggledChat()) p.sendMessage(toMc);
             });
-            Utils.log(finalMessage);
+            Utils.log(toMc);
             message.addReaction(Emoji.fromUnicode("\u2705")).queue();
         }
     }
+
+    private String parseReply(Message message) {
+        Message ref = message.getReferencedMessage();
+        if (ref.getAuthor().equals(plugin.getBot().getJda().getSelfUser()) && ref.getEmbeds().size() == 0) {
+            return ref.getContentRaw().trim().split(" ")[0].trim().replace("<", "").replace(">", "");
+        } else return ref.getAuthor().getAsTag();
+    }
+
     private String formatAttachment(String message, Message.Attachment attachment) {
         if (message.endsWith(" ")) return attachment.getUrl();
         return " ".concat(attachment.getUrl()).concat(" ");
